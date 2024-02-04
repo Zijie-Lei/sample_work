@@ -1,0 +1,169 @@
+<html lang="en">
+<head>
+    <title>EPPIC - Frequently Asked Questions</title>
+    <!-- The bootstrap stylesheet -->
+    <link
+            rel="stylesheet"
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+            crossorigin="anonymous"
+    />
+</head>
+
+
+<body>
+
+<div>
+    <img class="eppic-iframe-top-img"
+         src="images/eppic-logo.png">
+    <h1>
+        General
+    </h1>
+    <p><b>Q: What does EPPIC stand for?</b></p>
+    <p>Evolutionary Protein-Protein Interface Classifier.</p>
+    <p><b>Q: What can I use EPPIC for?</b></p>
+    <p>
+        EPPIC mainly aims at predicting the likely quaternary structure of protein crystals. It bases the predictions on
+        evolutionary scoring of the pairwise interfaces present in the crystal. In addition to that it provides information
+        of general use for a number of structural biology applications:
+    </p>
+    <ul>
+        <li>
+            Precomputed Multiple Sequence Alignments (MSAs) of closely related homologs (within 60% sequence identity) for
+            every protein in the PDB or for user-uploaded structures
+        </li>
+        <li>
+            Colored-by-sequence-entropy surface representation in browser embedded NGL viewer. Very useful for looking at
+            features present at protein surfaces: interfaces, binding sites etc.
+        </li>
+        <li>Number and distribution of core residues in interfaces</li>
+        <li>
+            Symmetry features of interfaces: the crystallographic operators generating each interface are provided and
+            are depicted in red if they are conducive to infinite assemblies. Also, one can compare the left- and
+            right-hand side of the Details table of each interface to see if it is isologous or heterologous
+        </li>
+    </ul>
+    <p><b>Q: Is it open-source? Is it published open-access?</b></p>
+    <p>
+        EPPIC is being developed as a fully open-source tool in the frame of the SNF-funded, use-inspired project "Molecular
+        evolution for structural biology: analyzing and predicting protein-protein interactions". Since 2012 we have been
+        following an open-access policy with regard to publications related to this project (see Publications page).
+    </p>
+    <p><b>Q: How should I cite EPPIC?</b></p>
+    <p>
+        The main paper describing the EPPIC method is Bliven S, Lafita A, Parker A, Capitani G, Duarte JM, PLoS Computational
+        Biology 2018. As well as citing the paper it is important that one cites the EPPIC software version (top right
+        below the logo in results page) and even more important the UniProt database version (monthly releases) used for
+        the evolutionary analysis. Our predictions depend on the sequence homologs found by searching the UniProt database
+        so with every release of the database the predictions can change. UniProt is growing very fast these days so a
+        few months of UniProt releases between two runs can make a difference.
+    </p>
+    <p><b>Q: How do I know if a prediction is reliable? Does EPPIC produce confidence values?</b></p>
+    <p>
+        EPPIC produces estimation of confidences both for assemblies and for interfaces. There are 3 levels of prediction confidence: high confidence, depicted with a golden star  ⭐;
+        medium confidence, depicted with a gray star  ; low confidence, depicted with no star.
+
+        As well as the confidence values, there are a few useful indicators to understand if the prediction can be trusted or not:
+    </p>
+    <ul>
+        <li>
+            The more sequence homologs the better: look at the number of homologs on the Sequence Information panel on
+            top. If it is below 10 we will not even produce the evolutionary scores and the prediction will be purely
+            geometrical (less reliable). If it is above 10 but not much larger than that one should be careful with the
+            results.
+        </li>
+        <li>
+            The sequence homologs should span a wide range of identities: look at their distribution by clicking on the
+            icon next to the number of homologs. A typical case is that of some microbial proteins where only very close
+            sequence homologs exist (>90%) and then nothing else is found in sequence databases until <40% identity.
+            The resulting alignment will contain less information, thus the prediction will be less reliable.
+        </li>
+        <li>
+            The stronger the consensus the better: if the three indicators are unanimous in their calls the prediction
+            can be considered more reliable.
+        </li>
+        <li>
+            Non full-length proteins (domains or fragments) are less reliably predicted: you can find out whether your
+            protein is full-length or not by clicking on the  icon next to the chain name in the Sequence Information panel.
+        </li>
+        <li>
+            Check for any kind of warnings: low resolution or R-free warnings on top and various per-interface warnings
+            in the last column of the Main Interface table. This latter category encompasses engineering artifacts
+            (mutations, expression tags), possible artifactual mediating ions, engineered disulfide bridges etc.
+            If any of these warnings appear one should always treat the results with more care.
+        </li>
+    </ul>
+
+    <h1>
+        Usage
+    </h1>
+    <p><b>Q: What are the advanced input parameters for?</b></p>
+    <ul>
+        <li>
+            Identity soft cut-off: The soft sequence identity cut-off for BLAST hits to be used in the alignment.
+            If there are not enough sequences at this cut-off then the threshold is relaxed until the hard cut-off is reached.
+        </li>
+        <li>
+            Identity hard cut-off: The hard sequence identity cut-off for BLAST hits to be used in the alignment.
+            If there are not enough sequences at soft cut-off then the threshold is relaxed until this hard cut-off.
+        </li>
+        <li>
+            Max num of sequences: The maximum number of sequences to be taken from the BLAST hits.
+        </li>
+        <li>
+            Search Mode: The PDB sequence is first matched to its UniProt entry and that sequence is then used for blasting.
+            In Global mode the full length UniProt is used, in local only the matching PDB part of the UniProt sequence is used.
+        </li>
+    </ul>
+    <p><b>Q: Do I need to change the input parameters?</b></p>
+    <p>
+        We don't recommend that the users change these parameters. We have used as default values the optimal ones found
+        by benchmarking the method on validated datasets of biological interfaces and crystal contacts. Our precomputed
+        results for PDB entries use always these defaults. A possible scenario where one would want to try other parameters
+        is in the case of lack of sequence data within the default identity cut-offs. Predictions based on MSAs of too
+        few sequences (<10 as a rule of thumb) are not reliable. Lowering the identity cut-off will find more sequences,
+        but can at the same time introduce problems in the alignment and potentially affect the accuracy of predictions
+        (see this figure)
+    </p>
+    <p><b>Q: When submitting my own PDB/mmCIF file, can I later access the results for the job? How about data privacy?</b></p>
+    <p>
+        Every new job run on the server is assigned a unique job identifier, a long alphanumeric string that is only
+        known by the user and that is extremely hard to guess, thus safeguarding data privacy. The jobs and input data
+        are stored on our servers for 1 month and then deleted. It is recommended that you give an email address while
+        submitting so that you receive the URL with the job identifier in your inbox. Otherwise, you will have to
+        bookmark it or keep a record of it yourself. It is always possible to retrieve the job by using the URL
+        http://www.eppic-web.org/ewui/#id/my_job_id . Whether the job is still running or already done, the URL will
+        show its current status and automatically display the final results whenever it is finished. You can even share
+        the URL with colleagues.
+    </p>
+    <p><b>Q: Can I directly link to the precomputed results for a PDB entry?</b></p>
+    <p>
+        The PDB-wide precomputed results can be accessed directly by using the permanent URLs: http://www.eppic-web.org/ewui/#id/PDB_code
+    </p>
+    <p><b>Q: What does the UniProt version on the home page indicate?</b></p>
+    <p>
+        The UniProt version (e.g. 2013_11) on the homepage denotes the UniProt version used to calculate the results of EPPIC.
+        UniProt is used to blast for homologs of the input structure, which are then used to calculate entropy scores.
+        These homologs can also slightly change from one version of UniProt to the next (monthly releases), so the
+        results can vary over time. The UniProt version used for a calculation is also provided in the header of the
+        Sequence Information panel in the results page.
+    </p>
+    <p><b>Q: What does the version below the EPPIC logo in results page indicate?</b></p>
+    <p>
+        We always keep improving EPPIC with bug-fixes and new features. The number displayed below the logo indicates
+        the version of EPPIC used to calculate the results. To find out what has changed in various versions, please refer to our Release Log page.
+    </p>
+    <p><b>Q: Where can I get the sequence entropy information?</b></p>
+    <p>
+        A surface representation of each chain color coded by sequence entropy can be obtained by pressing "p" in the
+        NGL 3D view window. The actual entropy values can be found in the Residue Detail tables (opened when clicking
+        on the Details button in the Main Interface table).
+    </p>
+
+
+
+
+</div>
+
+
+</body>
